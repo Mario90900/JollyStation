@@ -46,3 +46,9 @@
 /obj/item/organ/tongue/skrell/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_skrell
+
+//Moving the copper -> blood for skrell into here.
+/datum/reagent/copper/on_mob_life(mob/living/carbon/C)
+	if((isSkrell(C)) && (C.blood_volume < BLOOD_VOLUME_NORMAL))
+		C.blood_volume += 0.5
+	..()
