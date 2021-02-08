@@ -748,6 +748,13 @@
 	new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
 	M.use(reac_volume)
 
+//JollyStation Addition Start - Adding the ability for Skrell to regain blood from Copper
+/datum/reagent/copper/on_mob_life(mob/living/carbon/C)
+	if((isSkrell(C)) && (C.blood_volume < BLOOD_VOLUME_NORMAL))
+		C.blood_volume += 0.5
+	..()
+//JollyStation Addition End
+
 /datum/reagent/nitrogen
 	name = "Nitrogen"
 	description = "A colorless, odorless, tasteless gas. A simple asphyxiant that can silently displace vital oxygen."
@@ -924,7 +931,7 @@
 	color = "#606060" //pure iron? let's make it violet of course
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
-	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+	if((C.blood_volume < BLOOD_VOLUME_NORMAL) && !(isSkrell(C))) //JollyStation Edit, added check for the mob not being a skrell to benefit from this. -Jon
 		C.blood_volume += 0.5
 	..()
 
